@@ -1,0 +1,26 @@
+{
+  "name": "merge-options",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run rollup && npm run nexe",
+    "rollup": "rollup -c",
+    "nexe": "nexe --target windows-x64-14.15.3 --build --input output/index.js --output output/merge-options.exe --name merge-options"
+  },
+  "dependencies": {
+    "ini": "^5.0.0",
+    "lossless-json": "^4.0.1",
+    "yaml": "^2.5.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "nexe": "^4.0.0-rc.6",
+    "rollup": "^4.24.0"
+  },
+  "keywords": [],
+  "author": "Rebecca Turner <me@re-becca.org> (http://re-becca.org/)",
+  "license": "ISC",
+  "description": ""
+}
