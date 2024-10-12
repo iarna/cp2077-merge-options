@@ -13,7 +13,7 @@ async function main(mo2path, outputMod='Merged Options') {
         const exec  = process.argv[1].replace(/^.*?([^\\/]+)$/, '$1')
         console.error(`Form: merge-options <mo2path> [outputMod]`)
         console.error(`The default outputMod name is "Merged Options"`)
-        process.exit(1)
+        return 1
     }
     let mo2 = await MO2Info(mo2path)
     if (mo2.ini.General.gameName !== 'Cyberpunk 2077') {
@@ -41,21 +41,20 @@ async function main(mo2path, outputMod='Merged Options') {
         await fs.mkdir(output_folder, {recursive: true})
     }
     await fs.writeFile(output_file, JSON.stringify(JSON.parse(JSON.stringify(merged)), null, 4))//.replace(/\r?\n/g,'\r\n'))
+}
 
 
+main(...process.argv.slice(2)).catch(async ex => {
+    console.error(ex.message)
+    if (!(ex instanceof UserError)) {
+        if (ex.cause) console.error(ex.cause.stack)
+        console.error(ex.stack)
+    }
+    return 1
+}).then(async (code=0) => {
     console.error('Press any key to continue...')
     process.stdin.setRawMode(true)
     await process.stdin.read({length: 1})
     process.stdin.resume()
-    process.stdin.on('data', () => process.exit(0))
-}
-
-
-main(...process.argv.slice(2)).catch(ex => {
-   console.error(ex.message)
-   if (!(ex instanceof UserError)) {
-       if (ex.cause) console.error(ex.cause.stack)
-       console.error(ex.stack)
-   }
-   process.exit(1)
+    process.stdin.on('data', () => process.exit(code))
 })
