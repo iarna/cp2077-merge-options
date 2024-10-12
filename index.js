@@ -41,9 +41,13 @@ async function main(mo2path, outputMod='Merged Options') {
         await fs.mkdir(output_folder, {recursive: true})
     }
     await fs.writeFile(output_file, JSON.stringify(JSON.parse(JSON.stringify(merged)), null, 4))//.replace(/\r?\n/g,'\r\n'))
+
+
     console.error('Press any key to continue...')
     process.stdin.setRawMode(true)
     await process.stdin.read({length: 1})
+    process.stdin.resume()
+    process.stdin.on('data', () => process.exit(0))
 }
 
 
