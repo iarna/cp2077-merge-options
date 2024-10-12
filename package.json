@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "ini": "^5.0.0",
-    "lossless-json": "^4.0.1",
-    "yaml": "^2.5.1"
+    "lossless-json": "^4.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.0",

@@ -1,7 +1,6 @@
 'use strict'
 const fs = require('fs')
 const util = require('util')
-const yaml = require('yaml')
 const Attribution = require('./attribution.js')
 const TaggedValue = require('./tagged-value.js')
 //const {disp} = require('./disp-json.js')
