@@ -32,7 +32,7 @@ the version found in your Cyberpunk install.
 
 If you want to see what it found that was different than the stock options
 file, there's a file written to MO2's logs folder named
-`options-json-merger-changes.yaml` that's hopefully fairly self explanitory. 
+`options-json-merger-changes.yaml` that's hopefully fairly self explanatory. 
 (It's currently pretty good but not perfect at identifying and sourcing all
 the changes. It'll improve over time.)
 
@@ -50,7 +50,7 @@ These are the mod's whose options.json's I merge in my own load order:
 
 This is MIT licensed, which basically means "do what you like, just don't
 take credit for my work".  See the [LICENSE](LICENSE) file for the actual
-legalise.
+legalize.
 
 The repo is on github at: [github.com/iarna/cp2077-merge-options](https://github.com/iarna/cp2077-merge-options)
 
