@@ -52,9 +52,13 @@ main(...process.argv.slice(2)).catch(async ex => {
     }
     return 1
 }).then(async (code=0) => {
-    console.error('Press any key to continue...')
-    process.stdin.setRawMode(true)
-    await process.stdin.read({length: 1})
-    process.stdin.resume()
-    process.stdin.on('data', () => process.exit(code))
+    if (process.stdin.setRawMode) {
+        console.error('Press any key to continue...')
+        process.stdin.setRawMode(true)
+        await process.stdin.read({length: 1})
+        process.stdin.resume()
+        process.stdin.on('data', () => process.exit(code))
+    } else {
+        process.exit(code)
+    }
 })
