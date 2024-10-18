@@ -15,9 +15,14 @@ Add the tool to MO2 -- its arguments are the MO2 folder and the name of the
 mod you want to write the merged options to.  If you don't specify a mod
 name, it will create one named "Merged Options" and save the file there.
 
+In the screenshot below, you can see that my MO2 install was in
+`E:\Cyberpunk2077\Intro`, and I'm using `Merged Options` as the name of the
+mod holding the merged options. NOTE: `E:\Cybeprunk2077` is just where I
+keep stuff for modding Cyberpunk. My Cyberpunk install is
+`E:\GoGLibrary\Cyberpunk2077`. My MO2 install is named Intro because I'm
+using it to work on an MO2 modding guide for Cyberpunk.
+
 ![](mo2-executables.png)
-
-
 
 ## How It Works
 
@@ -46,11 +51,13 @@ These are the mod's whose options.json's I merge in my own load order:
 * [Immersive First Person - FreeLook (options.json)](https://www.nexusmods.com/cyberpunk2077/mods/2675)
 * [Unlock Fov](https://www.nexusmods.com/cyberpunk2077/mods/7989)
 
-## Source Code and License
+## License
 
 This is MIT licensed, which basically means "do what you like, just don't
 take credit for my work".  See the [LICENSE](LICENSE) file for the actual
 legalize.
+
+## On Nexus
 
 The repo is on github at: [github.com/iarna/cp2077-merge-options](https://github.com/iarna/cp2077-merge-options)
 
