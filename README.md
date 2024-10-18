@@ -59,5 +59,5 @@ legalize.
 
 ## On Nexus
 
-The repo is on github at: [github.com/iarna/cp2077-merge-options](https://github.com/iarna/cp2077-merge-options)
+The repo is on github at: [nexusmods.com/cyberpunk2077/mods/17125](https://www.nexusmods.com/cyberpunk2077/mods/17125)
 
