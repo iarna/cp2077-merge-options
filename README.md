@@ -70,5 +70,5 @@ legalize.
 
 ## On Nexus
 
-The repo is on github at: [nexusmods.com/cyberpunk2077/mods/17125](https://www.nexusmods.com/cyberpunk2077/mods/17125)
+The repo is on Nexus at: [nexusmods.com/cyberpunk2077/mods/17125](https://www.nexusmods.com/cyberpunk2077/mods/17125)
 
