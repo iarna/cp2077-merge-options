@@ -11,5 +11,5 @@ module.exports = {
   plugins: [commonjs({
     strictRequires: false,
     ignore: ['fs', 'util']
-  }), resolve(),terser()]
+  }), resolve({preferBuiltins: true, mainField: ['main']}),terser()]
 }
