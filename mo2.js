@@ -40,7 +40,7 @@ class MO2 {
         if (!profile) {
             profile = this.ini.General.selected_profile
         }
-        const modlist_filename = `${this.path}/profiles/${profile}/modlist.txt`
+        const modlist_filename = `${this.dir.profiles}/${profile}/modlist.txt`
         let modlist_txt
         try {
             modlist_txt = await fs.readFile(modlist_filename, 'utf8')
@@ -54,11 +54,14 @@ class MO2 {
             throw new LibError(`Error while parsing ${modlist_filename}`, {cause: ex})
         }
     }
+
+    dir = new MO2.Dirs(this)
+
     modfolder (modname) {
         if (!this.ini) throw new UserError(`Called modlist() before initializing object`)
-        const moddir = (this.ini.Settings.mod_directory || '%BASE_DIR%/mods').replace(/%BASE_DIR%/, this.path)
-        return `${moddir}/${modname}`
+        return `${this.dir.mods}/${modname}`
     }
+
     get gamePath () {
         // if we're running from WSL convert the path
         if (this.inWSL) {
@@ -71,6 +74,28 @@ class MO2 {
     }
 }
 exports.MO2 = MO2
+
+MO2.Dirs = class MO2Dirs {
+    constructor (mo2) {
+        this.mo2 = mo2
+    }
+    get downloads () {
+        const dir = this.mo2.ini.Settings.download_directory || '%BASE_DIR%/downloads'
+        return dir.replace(/%BASE_DIR%/g, this.mo2.path)
+    }
+    get mods () {
+        const dir = this.mo2.ini.Settings.mod_directory || '%BASE_DIR%/mods'
+        return dir.replace(/%BASE_DIR%/g, this.mo2.path)
+    }
+    get profiles () {
+        const dir = this.mo2.ini.Settings.profile_directory || '%BASE_DIR%/profiles'
+        return dir.replace(/%BASE_DIR%/g, this.mo2.path)
+    }
+    get overwrite () {
+        const dir = this.mo2.ini.Settings.overwrite_directory || '%BASE_DIR%/overwrite'
+        return dir.replace(/%BASE_DIR%/g, this.mo2.path)
+    }
+}
 
 const knownSections = exports.knownSections = [
   'General', 'PluginPersistance', 'Settings', 'customExecutables',

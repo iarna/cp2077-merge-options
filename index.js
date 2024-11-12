@@ -29,8 +29,7 @@ async function main(opts, mo2path, outputMod='Merged Options') {
 
         console.error('Merged options from:')
         for (const {file} of optionsFiles) { console.error('\t' + file) }
-        const mod_directory = (mo2.ini.Settings.mod_directory || '%BASE_DIR%/mods').replace(/%BASE_DIR%/g, mo2.path)
-        const output_folder = `${mod_directory}/${outputMod}/r6/config/settings/platform/pc`
+        const output_folder = `${mo2.modfolder(outputMod)}/r6/config/settings/platform/pc`
         const output_file = `${output_folder}/options.json`
         
         const writing = opts.dryrun ? 'Would have written' : 'Writing'
