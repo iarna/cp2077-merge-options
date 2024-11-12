@@ -5,7 +5,6 @@ that include an options.json file, but CP2077 can only load one of them.
 With MO2 we have access to all of the source mods that will be used, which
 gives us the opportunity to automatically resolve these conflicts.
 
-
 ## How To Use It
 
 Extract the zip file into your MO2 folder. You should then have a tools
@@ -40,6 +39,18 @@ file, there's a file written to MO2's logs folder named
 `options-json-merger-changes.yaml` that's hopefully fairly self explanatory. 
 (It's currently pretty good but not perfect at identifying and sourcing all
 the changes. It'll improve over time.)
+
+## Command Line Options
+
+```
+> merge-options [--no-pause] [-n | --dryrun] <mo2path> [<outputMod>]
+```
+
+* `--no-pause` - Don't prompt to press a key at the end, even if we have a terminal.
+* `--dryrun` or `-n` - Don't actually make any changes, just report what we would have done.
+
+* `mo2path` - The path where your `ModOrganizer.ini` lives (the same place as your `ModOrganizer.exe`).
+* `outputMod` - (Default: `Merged Options`) The name of the mod you want to write the merged options to. If the mod doesn't exist yet, it will be created.
 
 ## Example options.json Mods
 
