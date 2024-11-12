@@ -99,8 +99,9 @@ const $ini = Symbol('ini')
 const $get = Symbol('get')
 
 class MO2Ini {
+    #ini = null
     constructor (ini) {
-        this[$ini] = ini
+        this.#ini = ini
         // generate shortcuts
         for (const section of [...knownSections, ...Object.keys(ini)]) {
             if (section in this) continue
@@ -109,14 +110,14 @@ class MO2Ini {
             for (let inikey of Object.keys(ini[section])) {
                 if (inikey in this[section]) continue
                 this[section][inikey] = null;
-                Object.defineProperty(this[section], inikey, { get: () => this[$get](section,inikey) })
+                Object.defineProperty(this[section], inikey, { get: () => this.#get(section,inikey) })
             }
         }
     }
-    [$get] (section, key) {
-        if (!section in this[$ini]) return
-        if (!key in this[$ini][section]) return
-        const value = this[$ini][section][key]
+    #get (section, key) {
+        if (!section in this.#ini) return
+        if (!key in this.#ini[section]) return
+        const value = this.#ini[section][key]
         if (value === 'true' || value === 'false') return Boolean(value === 'true')
         if (matchNumber.test(value)) return Number(value)
         const matched = matchType.exec(value)
