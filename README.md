@@ -7,21 +7,62 @@ gives us the opportunity to automatically resolve these conflicts.
 
 ## How To Use It
 
-Extract the zip file into your MO2 folder. You should then have a tools
-folder, with `merge-options.exe` in it.
+NOTE: If you are unsure of exactly you add tools to MO2, see the
+[tutorial](#tutorial) at the bottom.
 
-Add the tool to MO2 -- its arguments are the MO2 folder and the name of the
-mod you want to write the merged options to.  If you don't specify a mod
-name, it will create one named "Merged Options" and save the file there.
+### For Global Installs of MO2
 
-In the screenshot below, you can see that my MO2 install was in
-`E:\Cyberpunk2077\Intro`, and I'm using `Merged Options` as the name of the
-mod holding the merged options. NOTE: `E:\Cybeprunk2077` is just where I
-keep stuff for modding Cyberpunk. My Cyberpunk install is
-`E:\GoGLibrary\Cyberpunk2077`. My MO2 install is named Intro because I'm
-using it to work on an MO2 modding guide for Cyberpunk.
+Extract the zip file somewhere you can easily find it. Add the tool to MO2 --
+you don't need to set "Start in" or any arguments.
 
-![](mo2-executables.png)
+### For Standalone Installs of MO2
+
+Extract the zip file into your MO2 folder. When that finishes you should
+then have a tools folder inside your MO2 folder with with
+`merge-options.exe` inside that.
+
+Add the tool to MO2 -- ordinarily you shouldn't need to set a folder to run
+from or any arguments.  The only time you would need to specify something is
+if you put `merge-options.exe` somewhere else, in which case set it to start
+in your MO2 folder.
+
+## Running the Tool
+
+As with other tools in MO2, select the merge-options entry from the
+executables menu and hit "Run".  You'll see a black terminal window appear
+with output (or errors if there were any).  Press any key to close it.
+
+![](runtime-output.png)
+
+If you don't see a window like this it means that MO2 couldn't find the
+executable you picked, or that Windows couldn't execute it for some reason.
+
+
+To get a better idea of what's going on, try running it in a terminal window
+and see what the error is.
+
+To run it in a terminal window, first open up a terminal window by
+pressing Win-R and entering "powershell" and clicking "Ok".
+
+Head back to MO2 and bring the entry in Modify Exeutables for merge-options.exe and copy the "Binary" section.
+
+Back to the Powershell window we opened, type `& "`, press Ctrl-Shift-V to insert the value we copied from MO2, and finally type `"` and press enter.
+
+Before you hit enter, this should look something like `& "E:\Path\To\tools\merge-options.exe"`
+
+If the output in that window does not make your problem obvious, please post
+a screenshot to the Posts section on Nexus and I'll try to help you.
+
+
+## Changing the Output Mod Name
+
+By default, it will create a mod named "Merged Options" and write the merged
+INIs to that folder. If you would like to use a different name, you can do so adding
+to the arguments `--mod <modname>`, like:
+
+```
+--mod "My Amazing Modlist's Combined Options"
+```
 
 ## How It Works
 
@@ -42,15 +83,12 @@ the changes. It'll improve over time.)
 
 ## Command Line Options
 
-```
-> merge-options [--no-pause] [-n | --dryrun] <mo2path> [<outputMod>]
-```
+> Form: merge-options [--help|-?] [--no-pause] [--dryrun|-n] [<mo2path>] [--mod=<outputMod>]
 
-* `--no-pause` - Don't prompt to press a key at the end, even if we have a terminal.
-* `--dryrun` or `-n` - Don't actually make any changes, just report what we would have done.
-
-* `mo2path` - The path where your `ModOrganizer.ini` lives (the same place as your `ModOrganizer.exe`).
-* `outputMod` - (Default: `Merged Options`) The name of the mod you want to write the merged options to. If the mod doesn't exist yet, it will be created.
+* <mo2path> - The path that has your ModOrganizer2.ini. If you don't specify a path then merge-options will try to find ini in "%LOCALAPPDATA%/ModOrganizer/Cyberpunk 2077", the folder it is running from, and the parent folder of that.
+* <outputMod> - The name of the mod to write the merged ini file to. If it does not exist, it will be created. Default value is: Merged Options
+* --no-pause - Don't wait for a keypress after running
+* --dryrun - Don't write anything to disc, just report which files would be merged.
 
 ## Example options.json Mods
 
@@ -61,6 +99,24 @@ These are the mod's whose options.json's I merge in my own load order:
 * [No More Hard-Coded Keybinds](https://www.nexusmods.com/cyberpunk2077/mods/4008)
 * [Immersive First Person - FreeLook (options.json)](https://www.nexusmods.com/cyberpunk2077/mods/2675)
 * [Unlock Fov](https://www.nexusmods.com/cyberpunk2077/mods/7989)
+
+## Tutorial
+
+To add a tool, click on the list of executables next to the big "Run" button and select `<Edit...>`
+
+![](edit-executable.png)
+
+This will pop open a new "Modify Executables" dialog. Click the + in the top right and pick `Add from file...`
+
+![](add-from-file.png)
+
+This will open a windows file dialog -- browse to wherever you extracted `merge-options.exe` and select it.
+
+![](pick-tool.png)
+
+And that's it -- you can click ok and close the dialog.
+
+![](added.png)
 
 ## License
 

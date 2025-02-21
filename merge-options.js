@@ -11,6 +11,7 @@ const {valType,deVal} = require('./valtype.js')
 // inappropriately picky about.
 const JSON = require('lossless-json') 
 const MO2Info = require('./mo2.js')
+const cleanPath = require('./clean-path.js')
 
 // because fs.promises.exists does not... exist and fs.process.access is awful
 const exists = require('./fs-exists.js')
@@ -20,14 +21,14 @@ exports.findOptionsFiles = async function getOptionsFiles(mo2, outputMod) {
     await Promise.all((await mo2.modlist()).reverse().map(async mod => {
         if (!mod.active) return
         if (mod.name === outputMod) return
-        const optionsFile = `${mo2.modfolder(mod.name)}/r6/config/settings/platform/pc/options.json`
+        const optionsFile = cleanPath(`${mo2.modfolder(mod.name)}/r6/config/settings/platform/pc/options.json`)
         if (!await exists(optionsFile)) return
         optionsFiles.push({mod: mod.name, file: optionsFile})
     }))
     return optionsFiles
 }
 exports.mergeOptions = async function mergeOptions (mo2, optionsFiles, defaultOptions, baseOptions) {
-    const defaultOptionsFile = `${mo2.gamePath}/r6/config/settings/platform/pc/options.json`
+    const defaultOptionsFile = cleanPath(`${mo2.gamePath}/r6/config/settings/platform/pc/options.json`)
     if (!defaultOptions) defaultOptions = JSON.parse(fs.readFileSync(defaultOptionsFile, 'utf8'))
     if (!baseOptions) baseOptions = JSON.parse(fs.readFileSync(defaultOptionsFile, 'utf8'))
     let optionsData = {}

@@ -3,25 +3,23 @@ const fs = require('fs').promises
 const ini = require('ini')
 const {UserError,LibError} = require('./errors.js')
 const exists = require('./fs-exists.js')
-
 const $initialize = Symbol('initialize')
+const cleanPath = require('./clean-path.js')
 
 exports = module.exports = async mo2path => {
     const mo2 = new MO2(mo2path)
     return await mo2[$initialize]()
 }
 
+
 class MO2 {
     constructor (mo2path) {
         this.path = mo2path
     }
 
-    inWSL = false
-
     async [$initialize] () {
         if ('ini' in this) return this.ini
-        this.inWSL = await exists('/proc/sys/fs/binfmt_misc/WSLInterop')
-        const mo2ini_filename = `${this.path}/ModOrganizer.ini`
+        const mo2ini_filename = cleanPath(`${this.path}/ModOrganizer.ini`)
         let rawmo2ini
         try {
             rawmo2ini = await fs.readFile(mo2ini_filename, 'utf8')
@@ -40,7 +38,7 @@ class MO2 {
         if (!profile) {
             profile = this.ini.General.selected_profile
         }
-        const modlist_filename = `${this.dir.profiles}/${profile}/modlist.txt`
+        const modlist_filename = cleanPath(`${this.dir.profiles}/${profile}/modlist.txt`)
         let modlist_txt
         try {
             modlist_txt = await fs.readFile(modlist_filename, 'utf8')
@@ -59,18 +57,11 @@ class MO2 {
 
     modfolder (modname) {
         if (!this.ini) throw new UserError(`Called modlist() before initializing object`)
-        return `${this.dir.mods}/${modname}`
+        return cleanPath(`${this.dir.mods}/${modname}`)
     }
 
     get gamePath () {
-        // if we're running from WSL convert the path
-        if (this.inWSL) {
-            return this.ini.General.gamePath
-                .replace(/\\/g, '/')
-                .replace(/^([A-Z]):/i, (_,drive) => `/mnt/${drive.toLowerCase()}`)
-        } else {
-            return this.ini.General.gamePath
-        }
+        return cleanPath(this.ini.General.gamePath)
     }
 }
 exports.MO2 = MO2
@@ -81,19 +72,23 @@ MO2.Dirs = class MO2Dirs {
     }
     get downloads () {
         const dir = this.mo2.ini.Settings.download_directory || '%BASE_DIR%/downloads'
-        return dir.replace(/%BASE_DIR%/g, this.mo2.path)
+        return cleanPath(dir.replace(/%BASE_DIR%/g, this.mo2.path))
     }
     get mods () {
         const dir = this.mo2.ini.Settings.mod_directory || '%BASE_DIR%/mods'
-        return dir.replace(/%BASE_DIR%/g, this.mo2.path)
+        return cleanPath(dir.replace(/%BASE_DIR%/g, this.mo2.path))
     }
     get profiles () {
         const dir = this.mo2.ini.Settings.profile_directory || '%BASE_DIR%/profiles'
-        return dir.replace(/%BASE_DIR%/g, this.mo2.path)
+        return cleanPath(dir.replace(/%BASE_DIR%/g, this.mo2.path))
     }
     get overwrite () {
         const dir = this.mo2.ini.Settings.overwrite_directory || '%BASE_DIR%/overwrite'
-        return dir.replace(/%BASE_DIR%/g, this.mo2.path)
+        return cleanPath(dir.replace(/%BASE_DIR%/g, this.mo2.path))
+    }
+    get logs () {
+        const dir = '%BASE_DIR%/logs'
+        return cleanPath(dir.replace(/%BASE_DIR%/g, this.mo2.path))
     }
 }
 
