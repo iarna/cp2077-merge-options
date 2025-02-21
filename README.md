@@ -44,7 +44,7 @@ and see what the error is.
 To run it in a terminal window, first open up a terminal window by
 pressing Win-R and entering "powershell" and clicking "Ok".
 
-Head back to MO2 and bring the entry in Modify Exeutables for merge-options.exe and copy the "Binary" section.
+Head back to MO2 and bring the entry in Modify Executables for merge-options.exe and copy the "Binary" section.
 
 Back to the Powershell window we opened, type `& "`, press Ctrl-Shift-V to insert the value we copied from MO2, and finally type `"` and press enter.
 
@@ -83,10 +83,10 @@ the changes. It'll improve over time.)
 
 ## Command Line Options
 
-> Form: merge-options [--help|-?] [--no-pause] [--dryrun|-n] [<mo2path>] [--mod=<outputMod>]
+> Form: merge-options [--help|-?] [--no-pause] [--dryrun|-n] [\<mo2path>] [--mod=\<outputMod>]
 
-* <mo2path> - The path that has your ModOrganizer2.ini. If you don't specify a path then merge-options will try to find ini in "%LOCALAPPDATA%/ModOrganizer/Cyberpunk 2077", the folder it is running from, and the parent folder of that.
-* <outputMod> - The name of the mod to write the merged ini file to. If it does not exist, it will be created. Default value is: Merged Options
+* \<mo2path> - The path that has your ModOrganizer2.ini. If you don't specify a path then merge-options will try to find ini in "%LOCALAPPDATA%/ModOrganizer/Cyberpunk 2077", the folder it is running from, and the parent folder of that.
+* \<outputMod> - The name of the mod to write the merged ini file to. If it does not exist, it will be created. Default value is: Merged Options
 * --no-pause - Don't wait for a keypress after running
 * --dryrun - Don't write anything to disc, just report which files would be merged.
 
