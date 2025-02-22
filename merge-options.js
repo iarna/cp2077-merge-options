@@ -234,25 +234,16 @@ function mergemod (mod, _keypath, newOptions, baseOptions, defaults={}) {
 
             for (let ii=0; ii<newValue.length; ++ii) {
                 const val = newValue[ii]
-                //console.error('>>', mergeValue)
                 const attrVal = attribValues ? new Attribution(val, mod) : val
                 const oldIndex = mergeMatch(mergeValue, val)
                 if (oldIndex === -1) {
-                    //console.error('THIS VALUE', val, ii)
                     const nextValues = newValue.slice(ii+1,Infinity)
-                    //console.error(`<newValue>(${newValue}).slice(<ii+1>(${ii+1}), Infinity) = <nextValues>(${nextValues})`)
                     const prevValues = newValue.slice(0,ii).reverse()
-                    //console.error("INDEX FROM", mergeValue)
                     const nextMatchIndex = mergeValue.findIndex(_ => mergeMatch(nextValues,_) !== -1)
                     const prevMatchIndex = mergeValue.findIndex(_ => mergeMatch(prevValues,_) !== -1)
-                    //console.error('NEXT VALUES', newValue.length, ii, nextValues, nextValues.length, nextMatchIndex)
-                    //console.error('PREV VALUES', prevValues, prevValues.legnth, prevMatchIndex)
                     if (nextValues.length && nextMatchIndex !== -1) {
-                        //console.error('SPLICE between', mergeValue[nextMatchIndex],'and',  mergeValue[nextMatchIndex+1])
                         mergeValue.splice(nextMatchIndex,0, attrVal)
                     } else if (prevValues.length && prevMatchIndex !== -1) {
-                        //SPLICE PREV 0 6
-                        //console.error('SPLICE PREV', prevMatchIndex, newValue.length - prevMatchIndex)
                         mergeValue.splice(1+(newValue.length - prevMatchIndex),0, attrVal)
                     } else {
                         // if we have only new values then just append
@@ -268,8 +259,6 @@ function mergemod (mod, _keypath, newOptions, baseOptions, defaults={}) {
                         mergemod(mod, `${keypath}.${valIdentity}`, val, mergeValue[oldIndex], defaultValue)
                     }
                 }
-                //console.error('<<', mergeValue)
-                //console.error('-----------')
             }
         } else if (newValueType === 'object') {
             const subDefault = key in defaults ? defaults[key] : {}
