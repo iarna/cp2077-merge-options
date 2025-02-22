@@ -118,10 +118,9 @@ function getchanges(from, to, _path=[]) {
         }
         // adds and changes
         for (const [ii, toVal] of Object.entries(to)) {
-            //const path = [..._path, '[]', {[toName]: `${toVal[toName]}`}]
-            const path = [..._path, `[${toVal[toName]}]`]
+            const path = [..._path, `[${deVal(toVal)[toName]}]`]
             const toValStr = disp(toVal)
-            const fromVal = toName && from.find(_ => _[toName] === toVal[toName])
+            const fromVal = toName && from.find(_ => _[toName] === deVal(toVal)[toName])
             // it's a named object, which we treate as an ordered map
             if (arrayType === 'object' && fromVal != null) {
                 // if we found a match, but it's not identical then iterate to find the changes
