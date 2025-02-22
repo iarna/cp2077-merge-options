@@ -217,10 +217,10 @@ function mergemod (mod, _keypath, newOptions, mergedOptions, defaults={}) {
             if (mixedTypes.length) {
                 throw new Error(`Found mixed array, expected ${newValueElementType}, got ${disp(mixedTypes)} for ${keypath}`)
             }
-            function ident(obj) {
+            function ident (obj) {
                 return valName ? deVal(obj)[valName] : disp(obj)
             }
-            function mergeMatch(oldValue, val) {
+            function mergeMatch (oldValue, val) {
                 const valIdentity = ident(val)
                 return oldValue.findIndex(_ => ident(_) === valIdentity)
             }
