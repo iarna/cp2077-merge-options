@@ -27,15 +27,15 @@ exports.findOptionsFiles = async function getOptionsFiles(mo2, outputMod) {
     }))
     return optionsFiles
 }
-exports.mergeOptions = async function mergeOptions (mo2, optionsFiles, defaultOptions, baseOptions) {
+exports.mergeOptions = function mergeOptions (mo2, optionsFiles, defaultOptions, mergedOptions) {
     const defaultOptionsFile = cleanPath(`${mo2.gamePath}/r6/config/settings/platform/pc/options.json`)
     if (!defaultOptions) defaultOptions = JSON.parse(fs.readFileSync(defaultOptionsFile, 'utf8'))
     if (!baseOptions) baseOptions = JSON.parse(fs.readFileSync(defaultOptionsFile, 'utf8'))
     let optionsData = {}
 
-    await Promise.all(optionsFiles.map(async ({mod,file}) => {
+    for (const {mod, file} of optionsFiles) {
         optionsData[mod] = JSON.parse(fs.readFileSync(file, 'utf8'))
-    }))
+    }
 
     for (const [mod,optionsContent] of Object.entries(optionsData)) {
         mergemod(mod, mod, optionsContent, baseOptions, defaultOptions)

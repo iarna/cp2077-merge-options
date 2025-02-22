@@ -55,7 +55,7 @@ async function main(opts, mo2path) {
         console.error(``)
 
         const optionsFiles = await findOptionsFiles(mo2, opts.mod)
-        const {merged, changeSummary} = await mergeOptions(mo2, optionsFiles)
+        const {merged, changeSummary} = mergeOptions(mo2, optionsFiles)
 
         const output_folder = cleanPath(`${mo2.modfolder(opts.mod)}/r6/config/settings/platform/pc`)
         const output_file = cleanPath(`${output_folder}/options.json`)
