@@ -97,7 +97,7 @@ function getchanges(from, to, _path=[]) {
     const changes = []
     const dispFrom = disp(from)
     const dispTo = disp(to)
-        if (disp(from) === disp(to)) return changes
+    if (disp(from) === disp(to)) return changes
 
     const toType = valType(to)
     if (toType === 'scalar') {
