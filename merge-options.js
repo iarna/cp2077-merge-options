@@ -145,14 +145,14 @@ function getchanges(from, to, _path=[]) {
                 //const path = [..._path, '[]', {toName: toVal[toName]} ]
                 const path = [..._path, `[${toVal[toName]}]`]
                 if (!to.find(_ => _[toName] === fromVal[toName])) {
-                   changes.push([path, 'REMOVED', null, fromVal])
+                   changes.push([path, 'REMOVE', null, fromVal])
                 }
             } else {
                 //const path = [..._path, `[]`, ii]
                 const path = [..._path, `[${ii}]`]
                 const fromValStr = disp(fromVal)
                 if (!to.find(_ => disp(_) === fromValStr)) {
-                    changes.push([path, 'REMOVED', null, fromVal])
+                    changes.push([path, 'REMOVE', null, fromVal])
                 }
             }
         }
@@ -173,7 +173,7 @@ function getchanges(from, to, _path=[]) {
         for (const key of Object.keys(from)) {
             if (key in to) continue
             const path = [...path, key]
-            changes.push([path, 'REMOVED', null, from[key]])
+            changes.push([path, 'REMOVE', null, from[key]])
         }
     }
     return changes 
