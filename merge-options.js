@@ -253,8 +253,8 @@ function mergemod (mod, _keypath, newOptions, mergedOptions, defaults={}) {
                     // matched objects get 
                     if (valName && newValueElementType === 'object') {
                         // if it exists in the array, but is a named object then we'll iterate into it
-                        const valIdentity = ident(valName,val)
-                        const defaultIndex = key in defaults ? defaults[key].findIndex(_ => ident(valName, _) === valIdentity) : -1
+                        const valIdentity = ident(val)
+                        const defaultIndex = key in defaults ? defaults[key].findIndex(_ => ident(_) === valIdentity) : -1
                         const defaultValue = defaultIndex !== -1 ? defaults[key][defaultIndex] : newValueElementType === 'object' ? {} : []
                         mergemod(mod, `${keypath}.${valIdentity}`, val, mergeValue[oldIndex], defaultValue)
                     }
