@@ -30,7 +30,7 @@ exports.findOptionsFiles = async function getOptionsFiles(mo2, outputMod) {
 exports.mergeOptions = function mergeOptions (mo2, optionsFiles, defaultOptions, mergedOptions) {
     const defaultOptionsFile = cleanPath(`${mo2.gamePath}/r6/config/settings/platform/pc/options.json`)
     if (!defaultOptions) defaultOptions = JSON.parse(fs.readFileSync(defaultOptionsFile, 'utf8'))
-    if (!baseOptions) baseOptions = JSON.parse(fs.readFileSync(defaultOptionsFile, 'utf8'))
+    if (!mergedOptions) mergedOptions = JSON.parse(fs.readFileSync(defaultOptionsFile, 'utf8'))
     let optionsData = {}
 
     for (const {mod, file} of optionsFiles) {
@@ -38,12 +38,12 @@ exports.mergeOptions = function mergeOptions (mo2, optionsFiles, defaultOptions,
     }
 
     for (const [mod,optionsContent] of Object.entries(optionsData)) {
-        mergemod(mod, mod, optionsContent, baseOptions, defaultOptions)
+        mergemod(mod, mod, optionsContent, mergedOptions, defaultOptions)
     }
 
-    const changes = getchanges(defaultOptions, baseOptions)
+    const changes = getchanges(defaultOptions, mergedOptions)
     const changeSummary = disp(summarizeChanges(changes))
-    return {merged: baseOptions, changeSummary, changes}
+    return {merged: mergedOptions, changeSummary, changes}
 }
 
 function summarizeChanges(changes) {
@@ -191,22 +191,22 @@ function findName (val) {
     }
 }
 
-function mergemod (mod, _keypath, newOptions, baseOptions, defaults={}) {
+function mergemod (mod, _keypath, newOptions, mergedOptions, defaults={}) {
     for (const key of Object.keys(newOptions)) {
         const keypath = _keypath + '.' + key
         const newValue = newOptions[key]
         const newValueType = valType(newValue)
-        if (!(key in baseOptions)) {
-            baseOptions[key] = new Attribution(newValue, mod)
+        if (!(key in mergedOptions)) {
+            mergedOptions[key] = new Attribution(newValue, mod)
             continue
         }
-        const mergeType = valType(baseOptions[key])
+        const mergeType = valType(mergedOptions[key])
         if (newValueType !== mergeType) {
             throw new Error(`${keypath} changed type of key from ${mergeType} to ${newValueType}`)
         } else if (disp(newValue) === disp(defaults[key]))  {
             // if the new value is entirely defualts, skip
             continue
-        } else if (disp(baseOptions[key]) === disp(newValue)) {
+        } else if (disp(mergedOptions[key]) === disp(newValue)) {
             // if a previous mod already set it to the same value, skip
             continue
         } else if (newValueType === 'array') {
@@ -226,11 +226,11 @@ function mergemod (mod, _keypath, newOptions, baseOptions, defaults={}) {
             }
 
             let attribValues = true
-            if (!(key in baseOptions)) {
-                baseOptions[key] = new Attribution([], mod)
+            if (!(key in mergedOptions)) {
+                mergedOptions[key] = new Attribution([], mod)
                 attribValues = false
             }
-            const mergeValue = deVal(baseOptions[key])
+            const mergeValue = deVal(mergedOptions[key])
 
             for (let ii=0; ii<newValue.length; ++ii) {
                 const val = newValue[ii]
@@ -262,15 +262,15 @@ function mergemod (mod, _keypath, newOptions, baseOptions, defaults={}) {
             }
         } else if (newValueType === 'object') {
             const subDefault = key in defaults ? defaults[key] : {}
-            mergemod(mod, keypath, newValue, baseOptions[key], subDefault)
+            mergemod(mod, keypath, newValue, mergedOptions[key], subDefault)
         } else if (newValueType === 'scalar') {
            // if the value from the ini is different than the defaults...
            if (!(key in defaults) || !cmp(newValue, defaults[key])) {
-               baseOptions[key] = new Attribution(newValue, mod)
+               mergedOptions[key] = new Attribution(newValue, mod)
            }
         } else {
            throw new Error(keypath+': hit a weird thing: ' + newValueType)
         }
     }
-    return baseOptions
+    return mergedOptions
 }
