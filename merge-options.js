@@ -49,7 +49,7 @@ exports.mergeOptions = function mergeOptions (mo2, optionsFiles, defaultOptions,
 function summarizeChanges(changes) {
     const changeTree = {}
 
-    for (const [path, action, to, from] of changes) {
+    for (const [[...path], action, to, from] of changes) {
         let branch = changeTree
         let terminalNode
         let terminalBranch
@@ -112,7 +112,7 @@ function getchanges(from, to, _path=[]) {
         const toName = arrayType === 'object' && findName(to[0])
         if (!toName) {
             if (disp(from) !== disp(to)) {
-                changes.push([_path, 'SET', to, from])
+                changes.push([[..._path], 'SET', to, from])
             }
             return changes
         }
