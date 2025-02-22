@@ -70,23 +70,18 @@ function summarizeChanges(changes) {
         //if (to instanceof Attribution) entry.push(`[${to.src}]`)
         if (action === 'SET' || action === 'ADD') {
             if (entry.length === 0 && to != null && from == null) {
-                entry = deVal(to)
+                entry = [to, null]
             } else if (to != null || from != null) {
-                if (to != null) {
-                    entry.push(deVal(to))
-                }
-                if (from != null) {
-                    entry.push({default: deVal(from)})
-                }
+                entry.push(to)
+                entry.push(from)
             } else {
                 throw new Error('Both from and to values are null in SET: ' + JSON.stringify([path, action, to, from]))
             }
         } else if (action === 'REMOVE') {
-            entry.push([deVal(from)])
+            entry.push(null, from)
         } else {
-            entry.push(action)
-            if (to != null) entry.push(deVal(to))
-            if (from != null) entry.push({default: deVal(from)})
+            entry.push(deVal(to))
+            entry.push({default: deVal(from)})
         }
         terminalBranch[terminalNode] = new TaggedValue(entry, action.toLowerCase())
     }
