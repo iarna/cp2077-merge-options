@@ -94,12 +94,10 @@ function dispObjectMultiline (vv, sp) {
     return '\n' + indent(sp)
          + Object.entries(vv).map(([key,val]) => `${safeKey(key)}: ${disp(val, sp+4, false)}`)
              .join('\n'+indent(sp))
-         + '\n'
 }
 
 function dispArrayMultiline (vv, sp) {
     return '\n' + indent(sp) + '- '
          + vv.map(_ => disp(_, sp+4))
              .join('\n'+indent(sp)+'- ')
-         + '\n'
 }
