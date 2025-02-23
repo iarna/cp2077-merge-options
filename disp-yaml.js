@@ -76,7 +76,7 @@ function dispArray (vv, sp, inline) {
 }
 
 function safeKey (key) {
-    return / "'/.test(key) ? JSON.stringify(key) : key
+    return /[ "'\[]/.test(key) ? JSON.stringify(key) : key
 }
 function dispObjectInline (vv, sp) {
     return '{ '
