@@ -174,7 +174,7 @@ function getchanges(from, to, _path=[]) {
 }
 
 function cmp (v1, v2) {
-    return disp(v1) === disp(v2)
+    return disp(deVal(v1)) === disp(deVal(v2))
 }
 
 function findName (val) {
@@ -197,10 +197,10 @@ function mergemod (mod, _keypath, newOptions, mergedOptions, defaults={}) {
         const mergeType = valType(mergedOptions[key])
         if (newValueType !== mergeType) {
             throw new Error(`${keypath} changed type of key from ${mergeType} to ${newValueType}`)
-        } else if (disp(newValue) === disp(defaults[key]))  {
+        } else if (cmp(newValue, defaults[key]))  {
             // if the new value is entirely defualts, skip
             continue
-        } else if (disp(mergedOptions[key]) === disp(newValue)) {
+        } else if (cmp(mergedOptions[key], newValue)) {
             // if a previous mod already set it to the same value, skip
             continue
         } else if (newValueType === 'array') {
