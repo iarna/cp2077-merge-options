@@ -260,7 +260,7 @@ function mergemod (mod, _keypath, newOptions, mergedOptions, defaults={}) {
         } else if (newValueType === 'scalar') {
             mergedOptions[key] = new Attribution(newValue, mod)
         } else {
-           throw new Error(keypath+': hit a weird thing: ' + newValueType)
+            throw new Error(keypath+': hit a weird thing: ' + newValueType)
         }
     }
     return mergedOptions
