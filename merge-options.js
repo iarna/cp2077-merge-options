@@ -258,10 +258,7 @@ function mergemod (mod, _keypath, newOptions, mergedOptions, defaults={}) {
             const subDefault = key in defaults ? defaults[key] : {}
             mergemod(mod, keypath, newValue, mergedOptions[key], subDefault)
         } else if (newValueType === 'scalar') {
-           // if the value from the ini is different than the defaults...
-           if (!(key in defaults) || !cmp(newValue, defaults[key])) {
-               mergedOptions[key] = new Attribution(newValue, mod)
-           }
+            mergedOptions[key] = new Attribution(newValue, mod)
         } else {
            throw new Error(keypath+': hit a weird thing: ' + newValueType)
         }
